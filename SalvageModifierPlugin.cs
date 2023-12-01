@@ -16,6 +16,10 @@ namespace SalvageModifier
             Instance = this;
 
             U.Events.OnPlayerConnected += SetPlayerSalvageTime;
+            if(Instance.Configuration.Instance.Items.Count != 0)
+            {
+                BarricadeDrop.OnSalvageRequested_Global += SRH;
+            }
 
             foreach (SteamPlayer steamPlayer in Provider.clients.Where(x => x != null))
             {
@@ -30,8 +34,14 @@ namespace SalvageModifier
         protected override void Unload()
         {
             U.Events.OnPlayerConnected -= SetPlayerSalvageTime;
-
+            if (Instance.Configuration.Instance.Items.Count != 0)
+            {
+                BarricadeDrop.OnSalvageRequested_Global -= SRH;
+            }
             Instance = null;
+        }
+        private void SRH(BarricadeDrop barricade, SteamPlayer instigatorClient, ref bool shouldAllow) {
+            SetPlayerSalvageTime(UnturnedPlayer.FromSteamPlayer(instigatorClient));
         }
 
         public static float GetSalvageTime(UnturnedPlayer player)
