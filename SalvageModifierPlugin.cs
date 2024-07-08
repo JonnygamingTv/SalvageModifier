@@ -1,4 +1,4 @@
-using Rocket.API;
+﻿using Rocket.API;
 using Rocket.Core.Plugins;
 using Rocket.Unturned;
 using Rocket.Unturned.Player;
@@ -43,12 +43,16 @@ namespace SalvageModifier
             Instance = null;
         }
         private void SRH(BarricadeDrop barricade, SteamPlayer instigatorClient, ref bool shouldAllow) {
+#if DEBUG
             Rocket.Core.Logging.Logger.Log(instigatorClient.playerID + " Requests to salvage");
+#endif
             SetPlayerSalvageTime(UnturnedPlayer.FromSteamPlayer(instigatorClient));
         }
         private void SSRH(StructureDrop structure, SteamPlayer instigatorClient, ref bool shouldAllow)
         {
+#if DEBUG
             Rocket.Core.Logging.Logger.Log(instigatorClient.playerID + " Requests to salvage");
+#endif
             SetPlayerSalvageTime(UnturnedPlayer.FromSteamPlayer(instigatorClient));
         }
 
